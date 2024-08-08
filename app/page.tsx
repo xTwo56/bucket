@@ -1,9 +1,11 @@
-import Image from "next/image";
+import Appbar from "@/components/appbar/page";
+import LandingRedirectingButtons from "@/components/landingRedirectingButtons/page";
 
 export default function Home() {
   return (
     <div>
-      hi there
+      <Appbar />
+      <LandingRedirectingButtons />
     </div>
   );
 }

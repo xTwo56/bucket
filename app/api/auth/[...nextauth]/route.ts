@@ -2,6 +2,8 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { findUser } from "@/actions/user/search";
+import { createUser } from "@/actions/user/create";
 const prisma = new PrismaClient()
 
 const handler = NextAuth({
@@ -14,37 +16,22 @@ const handler = NextAuth({
         password: { label: "password", type: "text", placeholder: "password" },
       },
       async authorize(credentials, req) {
-        try {
-          let user = await prisma.user.findUnique({
-            where: {
-              email: credentials?.email
-            }
-          })
-          if (!user) {
-            const newUser = await prisma.user.create({
-              data: {
-                username: credentials?.username as string,
-                email: credentials?.email as string,
-                password: credentials?.password as string
-              }
-            })
-            return newUser;
-          };
 
-          user = await prisma.user.findUnique({
-            where: {
-              email: credentials?.email,
-              username: credentials?.username,
-              password: credentials?.password
-            }
-          })
+        const username = credentials?.username as string
+        const email = credentials?.email as string
+        const password = credentials?.password as string
+        try {
+          let user = await findUser(email);
+          console.log(user)
           if (!user) {
-            return NextResponse.json({
-              msg: "invalid credentials"
+            user = await createUser({
+              username,
+              email,
+              password,
+              isSeller: false
             })
-          }
-          console.log("user: " + user)
-          return user
+          };
+          return user;
 
         } catch (err) {
           console.log(err)

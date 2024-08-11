@@ -6,5 +6,5 @@ export interface userType {
   email: string,
   password: string,
   isSeller: boolean
-  seller: SellerType
+  seller?: SellerType
 }

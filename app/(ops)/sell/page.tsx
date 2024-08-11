@@ -6,11 +6,10 @@ import { useRouter } from "next/navigation"
 
 export default function Sell() {
   const router = useRouter()
-  const productRef = useRef("")
-  const priceRef = useRef("")
-  const descriptionRef = useRef("")
-  const phoneRef = useRef("")
-  const sellerIdRef = useRef("")
+  const productRef = useRef<HTMLInputElement>(null)
+  const priceRef = useRef<HTMLInputElement>(null)
+  const descriptionRef = useRef<HTMLInputElement>(null)
+  const sellerIdRef = useRef<HTMLInputElement>(null)
 
   return (
     <div>
@@ -25,6 +24,11 @@ export default function Sell() {
   )
 
   async function onClickHandler() {
+
+    if (!productRef.current || !priceRef.current || !descriptionRef.current || !sellerIdRef.current) {
+      console.log("possible null input")
+      return
+    }
 
     const name = productRef.current.value
     const price = priceRef.current.value

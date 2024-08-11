@@ -5,8 +5,8 @@ import { useRef } from "react";
 
 export default function JoinAsSeller() {
 
-  const phoneRef = useRef("");
-  const userIdRef = useRef("");
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const userIdRef = useRef<HTMLInputElement>(null);
   return (
     <div>
       <input ref={phoneRef} placeholder="phone" type="text" />
@@ -16,6 +16,10 @@ export default function JoinAsSeller() {
   )
 
   async function onClickHandler() {
+    if (!phoneRef.current || !userIdRef.current) {
+      console.log("possible null input")
+      return
+    }
     const phone = phoneRef.current.value
     const userId = userIdRef.current.value
 

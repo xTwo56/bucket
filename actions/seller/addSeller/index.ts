@@ -9,9 +9,18 @@ export async function addSeller({ phone, userId }: any) {
       products: {
         create: []
       },
-      rating: .0,
+      rating: 0.0,
       phone,
       userId,
+    }
+  })
+
+  const newUser = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      isSeller: true,
     }
   })
   return newSeller

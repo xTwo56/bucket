@@ -1,8 +1,9 @@
 "use server"
 
 import { NextResponse } from "next/server"
-import { ProductType } from "./schema"
+import { ProductType } from "../types"
 import { PrismaClient } from "@prisma/client"
+import { connect } from "http2"
 const prisma = new PrismaClient()
 
 export async function addProduct({ name, description, price, sellerId }: ProductType) {
@@ -13,7 +14,12 @@ export async function addProduct({ name, description, price, sellerId }: Product
       name,
       description,
       price,
-      sellerId
+      sellerId,
+      seller: {
+        connect: {
+          id: sellerId
+        }
+      }
     }
   })
   if (!newProduct) return NextResponse.json({

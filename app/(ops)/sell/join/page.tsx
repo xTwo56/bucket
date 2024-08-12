@@ -1,27 +1,27 @@
 "use client"
 
 import { addSeller } from "@/actions/seller/addSeller/index";
+import { useSession } from "next-auth/react";
 import { useRef } from "react";
 
 export default function JoinAsSeller() {
 
+  const { data: session } = useSession()
   const phoneRef = useRef<HTMLInputElement>(null);
-  const userIdRef = useRef<HTMLInputElement>(null);
+  const userId = session.user.userId;
   return (
     <div>
       <input ref={phoneRef} placeholder="phone" type="text" />
-      <input ref={userIdRef} placeholder="userId" type="text" />
       <button onClick={onClickHandler}>submit</button>
     </div>
   )
 
   async function onClickHandler() {
-    if (!phoneRef.current || !userIdRef.current) {
+    if (!phoneRef.current || !userId) {
       console.log("possible null input")
       return
     }
     const phone = phoneRef.current.value
-    const userId = userIdRef.current.value
 
     console.log("phone" + phone)
     const newSeller = await addSeller({ phone, userId })

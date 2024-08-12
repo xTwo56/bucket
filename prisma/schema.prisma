@@ -36,6 +36,6 @@ model Product {
     name          String
     description   String
     price         String
-    sellerId      String          @unique
+    sellerId      String
     seller        Seller          @relation(fields:[sellerId], references: [id])
   }

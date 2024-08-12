@@ -1,8 +1,10 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { findUser } from "@/actions/user/search";
 import { createUser } from "@/actions/user/create";
+import { UserSigingType } from "./types";
 const prisma = new PrismaClient()
 
 const handler = NextAuth({
@@ -38,7 +40,19 @@ const handler = NextAuth({
       },
     })
   ],
-  secret: process.env.NEXTAUTH_SECRET
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    session: ({ session, user, token }): any => {
+      // console.log("session: " + JSON.stringify(session))
+      // console.log("user: " + JSON.stringify(user))
+      // console.log("token: " + JSON.stringify(token))
+      console.log("session.user: " + JSON.stringify(session.user))
+      if (!session || !session.user) return session;
+      session.user.userId = token.sub
+      console.log("session.sellerId: " + session.user.sellerId)
+      return session
+    }
+  }
 })
 
 export { handler as GET, handler as POST }

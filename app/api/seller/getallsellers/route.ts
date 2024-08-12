@@ -4,7 +4,12 @@ import { NextResponse } from "next/server";
 const prisma = new PrismaClient()
 
 export async function GET() {
-  const sellers = await prisma.seller.findMany()
+  const sellers = await prisma.seller.findMany({
+    include: {
+      user: true
+    }
+  })
+
   if (!sellers)
     return NextResponse.json({
       msg: "no seller found"

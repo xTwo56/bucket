@@ -50,6 +50,7 @@ export default function Sell() {
     console.log("after call")
     console.log("seller: " + JSON.stringify(response))
     const sellerId = response.data.seller.id
+    console.log("sellerId: " + sellerId)
     const newProduct = await addProduct({ name, description, price, sellerId });
     console.log("newProduct: " + newProduct)
   };

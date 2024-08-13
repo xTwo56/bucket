@@ -53,6 +53,7 @@ export default function Sell() {
     console.log("sellerId: " + sellerId)
     const newProduct = await addProduct({ name, description, price, sellerId });
     console.log("newProduct: " + newProduct)
+    alert("product added successfully!")
   };
 
   function handleNavigation() {

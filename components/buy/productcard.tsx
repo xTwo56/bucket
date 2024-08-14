@@ -1,5 +1,6 @@
 "use client"
 
+import { addToCart } from "@/actions/cart/addToCart";
 import { ProductType } from "@/actions/product/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -31,9 +32,14 @@ export default function ProductCard() {
               src="" alt="productImage" />
             <div>{product.name}</div>
             <div>{product.price}</div>
-            <button>addToCart</button>
+            <button onClick={onClickHandler}>addToCart</button>
           </div>
         ))}
     </div>
   )
+
+  async function onClickHandler() {
+    console.log("add to cart clicked")
+    await addToCart()
+  }
 } 

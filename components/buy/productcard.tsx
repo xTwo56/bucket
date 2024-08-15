@@ -27,19 +27,18 @@ export default function ProductCard() {
     <div>
       {loading || !products ? "loading" :
         products?.map((product, index) => (
-          <div key={index}>
+          <div key={product.id}>
             <img className=""
               src="" alt="productImage" />
             <div>{product.name}</div>
             <div>{product.price}</div>
-            <button onClick={onClickHandler}>addToCart</button>
+
+            <button onClick={async () => {
+              console.log("addToCart clicked")
+              await addToCart(product.id)
+            }}>addToCart</button>
           </div>
         ))}
     </div>
   )
-
-  async function onClickHandler() {
-    console.log("add to cart clicked")
-    await addToCart()
-  }
 } 

@@ -1,9 +1,10 @@
 "use client"
 
-import { getCart } from "@/actions/cart/getCart";
 import SignIn from "./signIn";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const router = useRouter()
   return (
     <div className="flex justify-between bg-blue-200 p-4 items-center">
       <b className="text-4xl text-blue-900">Buy</b>
@@ -16,7 +17,6 @@ export default function Navbar() {
 
   async function onClickHandler() {
     console.log("cart clicked")
-    const carts = await getCart()
-    console.log("carts: " + JSON.stringify(carts))
+    router.push("/user/cart")
   }
 }

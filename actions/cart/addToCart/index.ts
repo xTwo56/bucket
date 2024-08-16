@@ -11,12 +11,32 @@ export async function addToCart(productId: string) {
   const userId = response.user.userId
   console.log("response: " + JSON.stringify(response))
 
-  const newCart = await prisma.cart.create({
+  const existingCart = await prisma.cart.findUnique({
+    where: {
+      userId
+    }
+  })
+
+  if (!existingCart) {
+    const newCart = await prisma.cart.create({
+      data: {
+        userId,
+      }
+    })
+    const cartItem = await prisma.cartItems.create({
+      data: {
+        cartId: newCart.id,
+        productId
+      }
+    })
+    return newCart
+  }
+
+  const cartItem = await prisma.cartItems.create({
     data: {
-      userId,
+      cartId: existingCart.id,
       productId
     }
   })
-  return newCart
-
+  return cartItem
 }

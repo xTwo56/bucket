@@ -9,16 +9,17 @@ export async function getCart() {
 
   const response = await getServerSession(NEXT_AUTH)
   const userId = response.user.userId
-  const carts = await prisma.cart.findMany({
+  const cart = await prisma.cart.findUnique({
     where: {
       userId
     },
     include: {
-      product: true
+      cartItems: {
+        include: {
+          product: true
+        }
+      }
     }
   })
-  console.log("carts: " + JSON.stringify(carts))
-  return carts
-
-
+  return cart
 }

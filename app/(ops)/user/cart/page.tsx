@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react"
 import { getCart } from "@/actions/cart/getCart"
 import { CartType } from "./types"
+import Navbar from "@/components/buy/navbar"
+import CartItemsCard from "@/components/user/cartItemsCard"
 
 export default function Cart() {
 
@@ -22,10 +24,12 @@ export default function Cart() {
 
   return (
     <div>
+      <Navbar />
       {loading ? "loading" :
         !cart ? "empty cart" :
-          cart.cartItems?.map((item, index) => (
-            <div>{item.product?.name}</div>
+          cart.cartItems?.map((item) => (
+            <CartItemsCard key={item.product?.id}
+              productName={item.product?.name} productPrice={item.product?.price} />
           ))}
     </div>
   )

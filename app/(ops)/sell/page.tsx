@@ -14,6 +14,7 @@ export default function Sell() {
   const productRef = useRef<HTMLInputElement>(null)
   const priceRef = useRef<HTMLInputElement>(null)
   const descriptionRef = useRef<HTMLInputElement>(null)
+  const quantityRef = useRef<HTMLInputElement>(null)
 
   return (
     <div>
@@ -22,13 +23,18 @@ export default function Sell() {
       <input ref={productRef} placeholder="product" type="text" />
       <input ref={priceRef} placeholder="price" type="number" />
       <input ref={descriptionRef} placeholder="descrption" type="text" />
+      <input ref={quantityRef} placeholder="quantity" type="number" />
       <button onClick={onClickHandler}>submit</button>
     </div>
   )
 
   async function onClickHandler() {
 
-    if (!productRef.current || !priceRef.current || !descriptionRef.current) {
+    if (!productRef.current ||
+      !priceRef.current ||
+      !descriptionRef.current ||
+      !quantityRef.current) {
+
       console.log("possible null input")
       return
     }
@@ -36,6 +42,8 @@ export default function Sell() {
     const name = productRef.current.value
     const price = priceRef.current.value
     const description = descriptionRef.current.value
+    const quantityString = quantityRef.current.value
+    const quantity = parseInt(quantityString, 10)
 
     if (!name || !price || !description) {
       console.log("fill all details")
@@ -51,7 +59,7 @@ export default function Sell() {
     console.log("seller: " + JSON.stringify(response))
     const sellerId = response.data.seller.id
     console.log("sellerId: " + sellerId)
-    const newProduct = await addProduct({ name, description, price, sellerId });
+    const newProduct = await addProduct({ name, description, price, quantity, sellerId });
     console.log("newProduct: " + newProduct)
     alert("product added successfully!")
   };

@@ -5,7 +5,7 @@ import { ProductType } from "../types"
 import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
-export async function addProduct({ name, description, price, sellerId }: ProductType) {
+export async function addProduct({ name, description, price, quantity, sellerId }: ProductType) {
 
   console.log("inside addProduct")
   const newProduct = await prisma.product.create({
@@ -13,6 +13,7 @@ export async function addProduct({ name, description, price, sellerId }: Product
       name,
       description,
       price,
+      quantity,
       seller: {
         connect: {
           id: sellerId

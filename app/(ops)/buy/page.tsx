@@ -9,7 +9,7 @@ export default async function Buy() {
   console.log("products: " + JSON.stringify(response.data.products))
   console.log("req sent")
   return (
-    <div>
+    <div className="bg-gray-300 h-screen">
       <Navbar />
       <div>
         <ProductCard />

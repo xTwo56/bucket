@@ -39,6 +39,7 @@ model Product {
     name          String
     description   String
     price         String
+    quantity      Int             @default(1)
     sellerId      String
     seller        Seller          @relation(fields:[sellerId], references: [id])
     cartItems     CartItems[]
@@ -52,6 +53,7 @@ model CartItems {
     cart          Cart?           @relation(fields:[cartId], references: [id])
     productId     String
     product       Product         @relation(fields:[productId], references: [id])
+    quantity      Int             @default(1)
   }
 
   model Cart {

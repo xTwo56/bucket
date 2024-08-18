@@ -6,17 +6,23 @@ import { useRouter } from "next/navigation";
 export default function Navbar() {
   const router = useRouter()
   return (
-    <div className="flex justify-between bg-blue-200 p-4 items-center">
+    <div className="flex justify-between bg-gray-600 p-4 items-center">
       <b className="text-4xl text-blue-900">Buy</b>
       <div className="flex flex-row gap-8">
-        <button onClick={onClickHandler}> Cart </button>
+        <button onClick={navigateToOrder}>Order</button>
+        <button onClick={navigateToCart}> Cart </button>
         <SignIn />
       </div>
     </div>
   )
 
-  async function onClickHandler() {
+  function navigateToCart() {
     console.log("cart clicked")
     router.push("/user/cart")
+  }
+
+  function navigateToOrder() {
+    console.log("cart clicked")
+    router.push("/user/order")
   }
 }

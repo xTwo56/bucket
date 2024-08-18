@@ -45,7 +45,7 @@ export default function Sell() {
     const quantityString = quantityRef.current.value
     const quantity = parseInt(quantityString, 10)
 
-    if (!name || !price || !description) {
+    if (!name || !price || !description || !quantity) {
       console.log("fill all details")
       return;
     }

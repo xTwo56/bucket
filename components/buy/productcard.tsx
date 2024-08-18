@@ -27,11 +27,13 @@ export default function ProductCard() {
     <div>
       {loading || !products ? "loading" :
         products?.map((product, index) => (
-          <div key={product.id}>
+          <div key={product.id}
+            className="p-4 border-2">
             <img className=""
               src="" alt="productImage" />
             <div>{product.name}</div>
             <div>{product.price}</div>
+            <div>left: {product.quantity}</div>
 
             <button onClick={async () => {
               console.log("addToCart clicked")

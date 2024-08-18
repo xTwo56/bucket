@@ -29,19 +29,17 @@ export default function Cart() {
         !cart ? "empty cart" :
           cart.cartItems?.map((item) => (
             <CartItemsCard key={item.product?.id}
-              productName={item.product?.name} productPrice={item.product?.price} />
+              productName={item.product?.name}
+              productPrice={item.product?.price}
+              quantity={item.product?.quantity} />
           ))}
+      <button className="p-2 m-4 border-2"
+        onClick={confirmOrder}>Confirm</button>
     </div>
   )
+
+  function confirmOrder() {
+    console.log("confirm clicked")
+  }
 }
 
-{/* {loading || !cart ? "loading" : */ }
-{/*   cart.map((product, index) => ( */ }
-{/*     <div key={product.id}> */ }
-{/*       <img className="" */ }
-{/*         src="" alt="productImage" /> */ }
-{/*       <div>{product.name}</div> */ }
-{/*       <div>{product.price}</div> */ }
-{/**/ }
-{/*     </div> */ }
-{/*   ))} */ }

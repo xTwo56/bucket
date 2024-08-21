@@ -5,6 +5,7 @@ import { getCart } from "@/actions/cart/getCart"
 import { CartType } from "./types"
 import Navbar from "@/components/buy/navbar"
 import CartItemsCard from "@/components/user/cartItemsCard"
+import { placeOrder } from "@/actions/user/orders/placeOrder"
 
 export default function Cart() {
 
@@ -38,8 +39,9 @@ export default function Cart() {
     </div>
   )
 
-  function confirmOrder() {
+  async function confirmOrder() {
     console.log("confirm clicked")
+    await placeOrder(cart?.cartItems)
   }
 }
 

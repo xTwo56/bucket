@@ -6,6 +6,10 @@ const prisma = new PrismaClient()
 
 export async function clearAll() {
 
+  await prisma.order.deleteMany({})
+  await prisma.orderItems.deleteMany({})
+  await prisma.cartItems.deleteMany({})
+  await prisma.cart.deleteMany({})
   await prisma.product.deleteMany({})
   await prisma.seller.deleteMany({})
   await prisma.user.deleteMany({})

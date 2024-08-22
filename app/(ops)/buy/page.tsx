@@ -5,8 +5,6 @@ import axios from "axios";
 export default async function Buy() {
 
   console.log("from buy")
-  const response = await axios.get("http://localhost:3000/api/product/getallproducts");
-  console.log("products: " + JSON.stringify(response.data.products))
   console.log("req sent")
   return (
     <div className="bg-gray-300 h-screen">

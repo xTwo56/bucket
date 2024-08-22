@@ -40,10 +40,10 @@ export default function Sell() {
     }
 
     const name = productRef.current.value
-    const price = priceRef.current.value
+    const priceString = priceRef.current.value
+    const price = parseInt(priceString)
     const description = descriptionRef.current.value
-    const quantityString = quantityRef.current.value
-    const quantity = parseInt(quantityString, 10)
+    const quantity = parseInt(quantityRef.current.value, 10)
 
     if (!name || !price || !description || !quantity) {
       console.log("fill all details")

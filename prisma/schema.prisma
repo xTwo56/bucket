@@ -38,7 +38,7 @@ model Product {
     id            String          @id  @default(uuid())
     name          String
     description   String
-    price         String
+    price         Int             @default(0)
     quantity      Int             @default(1)
     sellerId      String
     seller        Seller          @relation(fields:[sellerId], references: [id])
@@ -52,6 +52,7 @@ model CartItems {
     cart          Cart?           @relation(fields:[cartId], references: [id])
     productId     String
     product       Product         @relation(fields:[productId], references: [id])
+    price         Int             @default(0)
     quantity      Int             @default(1)
   }
 

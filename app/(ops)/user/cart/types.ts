@@ -3,6 +3,7 @@ import { ProductType } from "@/actions/product/types"
 export interface CartItemType {
   id: string | null,
   cartId: string,
+  quantity: number,
   productId: string,
   product: ProductType | null
 }

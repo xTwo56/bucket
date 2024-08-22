@@ -32,7 +32,9 @@ export default function Cart() {
             <CartItemsCard key={item.product?.id}
               productName={item.product?.name}
               productPrice={item.product?.price}
-              quantity={item.product?.quantity} />
+              productQuantity={item.product?.quantity}
+              itemQuantity={item.quantity}
+              itemId={item.id} />
           ))}
       <button className="p-2 m-4 border-2"
         onClick={confirmOrder}>Confirm</button>

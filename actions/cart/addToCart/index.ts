@@ -6,11 +6,12 @@ import { NEXT_AUTH } from "@/lib/auth"
 import { NextResponse } from "next/server"
 const prisma = new PrismaClient()
 
-export async function addToCart(productId: string, productQuantity: number) {
+export async function addToCart(productId: string, productQuantity: number, productPrice: number) {
 
   const response = await getServerSession(NEXT_AUTH)
   const userId = response.user.userId
   console.log("response: " + JSON.stringify(response))
+  console.log("userId: " + userId)
 
   const existingCart = await prisma.cart.findUnique({
     where: {
@@ -19,6 +20,7 @@ export async function addToCart(productId: string, productQuantity: number) {
   })
 
   if (!existingCart) {
+    console.log("inside !existingCart")
     const newCart = await prisma.cart.create({
       data: {
         userId,
@@ -31,9 +33,14 @@ export async function addToCart(productId: string, productQuantity: number) {
         productId
       }
     })
-    return newCart
+
+    return {
+      success: true,
+      msg: "item added successfully"
+    };
   }
 
+  console.log("existingCartId: " + existingCart.id)
   const existingItem = await prisma.cartItems.findMany({
     where: {
       cartId: existingCart.id,
@@ -41,47 +48,48 @@ export async function addToCart(productId: string, productQuantity: number) {
     }
   })
 
-  if (!existingItem) {
+  if (!existingItem[0]) {
+    console.log("inside existingItem")
     const newCartItem = await prisma.cartItems.create({
       data: {
         cartId: existingCart.id,
-        productId
+        productId,
+        price: productPrice
       }
     })
-    return newCartItem
+
+    return {
+      success: true,
+      msg: "item added successfully"
+    };
   }
 
   console.log("productquantity: " + productQuantity)
   console.log("itemquantity: " + existingItem[0].quantity)
 
   if (existingItem[0].quantity < productQuantity) {
+    console.log("increasing count")
 
     const increasedCountItem = await prisma.cartItems.update({
       where: {
-        id: existingCart.id,
+        id: existingItem[0].id,
         productId
       },
       data: {
         quantity: {
           increment: 1
-        }
+        },
+        price: existingItem[0].price * 2
       }
     })
-
-    const decreasedCountProduct = await prisma.product.update({
-      where: {
-        id: productId
-      },
-      data: {
-        quantity: {
-          decrement: 1
-        }
-      }
-    })
+    return {
+      success: true,
+      msg: "item added successfully"
+    }
   }
 
-  return NextResponse.json({
-    msg: "no items left"
-  })
-
+  return {
+    success: false,
+    msg: "can't add more"
+  }
 }

@@ -36,6 +36,21 @@ export async function placeOrder(cartItems: any) {
       data: orderItemData
     })
 
+    const updatePromises = cartItems.map((item: CartItemType) => {
+      let itemQuantity = item.quantity
+      let productQuantity = item.product?.quantity
+      if (!productQuantity) productQuantity = 1
+
+      return prisma.product.update({
+        where: {
+          id: item.productId
+        },
+        data: {
+          quantity: productQuantity - itemQuantity
+        }
+      })
+    })
+
     await prisma.cartItems.deleteMany({
       where: {
         cart: {

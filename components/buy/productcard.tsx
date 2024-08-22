@@ -37,7 +37,11 @@ export default function ProductCard() {
 
             <button onClick={async () => {
               console.log("addToCart clicked")
-              await addToCart(product.id)
+              const response = await addToCart(product.id, product.quantity)
+              console.log(response)
+              if (!response?.success) {
+                alert("no items left")
+              }
             }}>addToCart</button>
           </div>
         ))}

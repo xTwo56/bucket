@@ -2,6 +2,7 @@
 
 import { cancelItem } from "@/actions/user/orders/cancelItem";
 import Navbar from "@/components/buy/navbar";
+import { OrderItemType } from "@/types/OrderItemType";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -33,7 +34,8 @@ export default function Order() {
             className="p-4 border-2 m-2">
             <div>{item.productId}</div>
             <div>{item.product.name}</div>
-            <div>{item.product.price}</div>
+            <div>{item.quantity}</div>
+            <div>{item.price}</div>
             <button onClick={() => cancelItemHandler(item.id)}>cancel</button>
           </div>
         )))}

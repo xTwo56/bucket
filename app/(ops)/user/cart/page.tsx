@@ -27,23 +27,28 @@ export default function Cart() {
     <div>
       <Navbar />
       {loading ? "loading" :
-        !cart ? "empty cart" :
-          cart.cartItems?.map((item) => (
-            <CartItemsCard key={item.product?.id}
-              productName={item.product?.name}
-              productPrice={item.product?.price}
-              productQuantity={item.product?.quantity}
-              itemQuantity={item.quantity}
-              itemId={item.id} />
-          ))}
-      <button className="p-2 m-4 border-2"
-        onClick={confirmOrder}>Confirm</button>
+        !cart?.cartItems ? "empty cart" :
+          cart.cartItems.map((item) => {
+            console.log(JSON.stringify(item))
+            if (!item) return null
+
+            return (
+              <CartItemsCard key={item.product?.id} item={item} />
+            );
+          })
+      }
+      <button className="p-2 m-4 border-2" onClick={confirmOrder}>
+        Confirm
+      </button>
     </div>
-  )
+  );
 
   async function confirmOrder() {
-    console.log("confirm clicked")
-    await placeOrder(cart?.cartItems)
+    console.log("confirm clicked");
+    await placeOrder(cart?.cartItems);
+  }
+
+  async function getTotalPrice() {
+    await getTotalPrice()
   }
 }
-

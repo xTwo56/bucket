@@ -3,7 +3,6 @@
 import { CartItemType } from "@/app/(ops)/user/cart/types"
 import { NEXT_AUTH } from "@/lib/auth"
 import { PrismaClient } from "@prisma/client"
-import { connect } from "http2"
 import { getServerSession } from "next-auth"
 const prisma = new PrismaClient()
 
@@ -27,7 +26,10 @@ export async function placeOrder(cartItems: any) {
 
     const orderItemData = cartItems.map((item: CartItemType) => ({
       userId,
+      orderId: order.id,
       productId: item.productId,
+      quantity: item.quantity,
+      price: item.price,
       confirmed: true,
       returned: false
     }))
@@ -39,7 +41,12 @@ export async function placeOrder(cartItems: any) {
     const updatePromises = cartItems.map((item: CartItemType) => {
       let itemQuantity = item.quantity
       let productQuantity = item.product?.quantity
-      if (!productQuantity) productQuantity = 1
+      if (!productQuantity) {
+        console.log("no products left")
+        return {
+          msg: "no products left"
+        }
+      }
 
       return prisma.product.update({
         where: {

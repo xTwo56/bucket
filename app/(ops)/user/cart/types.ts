@@ -3,9 +3,11 @@ import { ProductType } from "@/actions/product/types"
 export interface CartItemType {
   id: string | null,
   cartId: string,
-  quantity: number,
+  cartItemId?: string,
   productId: string,
-  product: ProductType | null
+  price: number,
+  quantity: number,
+  product: ProductType | null,
 }
 
 export interface CartType {

@@ -27,6 +27,7 @@ export default function ProductCard() {
     <div>
       {loading || !products ? "loading" :
         products?.map((product, index) => (
+
           <div key={product.id}
             className="p-4 border-2">
             <img className=""
@@ -37,14 +38,20 @@ export default function ProductCard() {
 
             <button onClick={async () => {
               console.log("addToCart clicked")
-              const response = await addToCart(product.id, product.quantity)
+              if (!product) {
+                return {
+                  msg: "product undefined"
+                }
+              }
+              const response = await addToCart(product)
               console.log(response)
               if (!response?.success) {
                 alert("no items left")
               }
             }}>addToCart</button>
           </div>
-        ))}
+        )
+        )}
     </div>
   )
 } 

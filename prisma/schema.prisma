@@ -54,7 +54,6 @@ model CartItems {
     product       Product         @relation(fields:[productId], references: [id])
     price         Int             @default(0)
     quantity      Int             @default(1)
-    orderItems    OrderItems?
   }
 
   model Cart {
@@ -70,10 +69,10 @@ model CartItems {
     user          User            @relation(fields:[userId], references: [id])
     productId     String
     product       Product         @relation(fields:[productId], references: [id])
-    cartItemId    String?         @unique
-    cartItem      CartItems?      @relation(fields:[cartItemId], references: [id])
     orderId       String
     order         Order?          @relation(fields:[orderId], references: [id])
+    quantity      Int             @default(1)
+    price         Int             @default(0)
     confirmed     Boolean
     returned      Boolean
     }
